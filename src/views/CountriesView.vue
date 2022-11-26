@@ -19,8 +19,24 @@ export default {
   methods: {
     filtrarPais(e) {
       // TODO: Implementar. filtra el país de acuerdo al valor del input. Hint: Recuerda la función filter
-      const filtro = e.target.value;
+      getPaisInformation() ;{
+      fetch("https://countryflagsapi.com/:filetype/:code")
+        .then(response => response.json())
+        .then(res => {
+          if (this.search) {
+            this.countries = res.results.filter(countries =>
+              countries.name.toLowerCase().includes(this.search.toLowerCase())
+            );
+          } else {
+            this.countries = res.results;
+          }
+        });
+    }
     },
+    created(){
+      this.getPaisInformation();
+      const filter = e.target.value;  
+    }
   },
 };
 </script>
@@ -44,8 +60,14 @@ export default {
       :currency="country.currency"
       :region="country.region"
       :code="country.iso2"
-
+      :src="`https://countryflagsapi.com/png/${code}`"
+    
     ></CountryComponent>
+    />
+    <h1>{{name}}</h1>
+    <h2>Capital: {{capital}}</h2>
+    <h3>Moneda: {{currency_name}}({{currency}})</h3>
+    <h3>Región: {{region}}</h3>
   </div>
 </template>
 

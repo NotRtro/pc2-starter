@@ -20,9 +20,17 @@ export default {
   methods: {
     setCapital(e) {
       //TODO: implementar. fija la capital del input.
+      axios.get('countryl'+ this.$forceUpdate.params.id).then(response =>{
+        this.capital = response.data.name;
+        this.pos = response.data.pos;
+        capital = e;
+      })
     },
     adivinarCapital() {
       //TODO: implementar. verifica se la adivinanza es correcta.
+      if (capital == this.capital.setCapital){
+        this.puntaje += 1;
+      }
     },
   },
 };
